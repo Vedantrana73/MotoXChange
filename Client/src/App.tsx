@@ -12,7 +12,7 @@ const App: React.FC = () => {
   return (
     <BrowserRouter>
       <Navbar />
-      { <Padding /> }
+      <Padding />
       <Routes>
         <Route path="/" element={<></>} />
         <Route path="/register" element={<Register />} />
