@@ -9,9 +9,20 @@ const RegisterAuthentication: React.FC = () => {
       const newOtp = [...otp];
       newOtp[index] = value;
       setOtp(newOtp);
+      
+      if(index < 3 && value)
+        {
+          document.getElementById(`otp-box-${index+1}`)?.focus()
+      }
+      
     }
   };
-
+  const handleBack = (event: React.KeyboardEvent<HTMLInputElement>,index: number) =>{
+    if(index> 0 && event.key === "Backspace" && otp[index]==='')
+    {
+      document.getElementById(`otp-box-${index-1}`)?.focus();
+    }
+  }
   return (
     <div className="w-1/2 space-y-8 flex flex-col items-center h-[32rem] shadow-xl shadow-gray-400">
       <div>
@@ -29,6 +40,7 @@ const RegisterAuthentication: React.FC = () => {
             maxLength={1}
             value={digit}
             onChange={(e) => handleOtpChange(e, index)}
+            onKeyDown={(e)=>handleBack(e,index)}
             className="border-2 border-black border-x-0 border-t-0 w-12 py-2 text-center"
           />
         ))}

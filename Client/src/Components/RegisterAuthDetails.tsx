@@ -6,7 +6,10 @@ const RegisterDetails: React.FC = () => {
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
-    navigate('/register/authenticate');
+    try
+    {
+      // axios.post('')
+    }
   };
 
   return (
