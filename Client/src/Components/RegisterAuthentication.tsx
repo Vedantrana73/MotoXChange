@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
+import { useUser } from '../context/UserContext';
 
 const RegisterAuthentication: React.FC = () => {
+  const {email} = useUser();
   const [otp, setOtp] = useState<string[]>(['', '', '', '']);
 
   const handleOtpChange = (e: React.ChangeEvent<HTMLInputElement>, index: number) => {
@@ -29,7 +31,7 @@ const RegisterAuthentication: React.FC = () => {
         <h1 className="text-3xl font-semibold pt-7 text-center">Verification</h1>
       </div>
       <div className="font-semibold text-xl text-center break-words">
-        OTP has been sent successfully to aks@gmail.com
+        OTP has been sent successfully to {email}
       </div>
       <div className="flex space-x-4">
         {otp.map((digit, index) => (
