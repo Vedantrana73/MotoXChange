@@ -1,12 +1,27 @@
 import React from 'react';
+import { useUser } from '../context/UserContext';
+import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 const RegisterDetails: React.FC = () => {
   const navigate = useNavigate();
-
-  const handleSubmit = (event: React.FormEvent) => {
+  const {email,firstName,lastName,setEmail,setFirstName,setLastName} = useUser();
+  const handleSubmit = async(event: React.FormEvent) => {
     event.preventDefault();
-    navigate('/register/authenticate');
+    try
+    {
+      const response = await axios.post('http://localhost:5000/user/register',{
+        email,
+        firstName,
+        lastName
+      });
+      console.log(response.data);
+      navigate('/register/authenticate');
+    }
+    catch(error)
+    {
+      console.log('error: '+error);
+    }
   };
 
   return (
@@ -23,6 +38,7 @@ const RegisterDetails: React.FC = () => {
             id="f_name"
             placeholder="Enter First Name.."
             className="border-2 border-black border-x-0 border-t-0 w-72 py-2"
+            onChange={(e)=>setFirstName(e.target.value)}
           />
 
           <div className="mt-7">
@@ -34,6 +50,7 @@ const RegisterDetails: React.FC = () => {
             id="l_name"
             placeholder="Enter Last Name.."
             className="border-2 border-black border-x-0 border-t-0 w-72 py-2"
+            onChange={(e)=>setLastName(e.target.value)}
           />
 
           <div className="mt-7">
@@ -45,6 +62,7 @@ const RegisterDetails: React.FC = () => {
             id="email"
             placeholder="Enter Email.."
             className="border-2 border-black border-x-0 border-t-0 w-72 py-2"
+            onChange={(e)=>setEmail(e.target.value)}
           />
 
           <button

@@ -19,7 +19,7 @@ const sendEmail = async(to, subject, text) =>{
     }
 
     try{
-        const info = await transporter.sendMail(mailOptions);
+        await transporter.sendMail(mailOptions);
         console.log(`Email sent to ${to}`);
     }
     catch(err)
