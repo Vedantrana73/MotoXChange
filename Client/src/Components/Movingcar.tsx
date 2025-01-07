@@ -21,7 +21,7 @@ const Movingcar: React.FC = () => {
 
   return (
     <div
-      className="w-1/2 bg-cover bg-center flex justify-center p-20 opacity-90"
+      className="w-screen lg:w-1/2 bg-cover bg-center flex justify-center p-20 opacity-90"
       style={{ backgroundImage: `url(${imageArr[currentImage]})` }}
     >
       <div className="text-4xl font-bold">

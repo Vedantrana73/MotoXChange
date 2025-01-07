@@ -15,7 +15,6 @@ const App: React.FC = () => {
       <Padding />
       <Routes>
         <Route path="/" element={<></>} />
-        <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register/*" element={<Register />} /> 
         <Route path="/settings" element={<Navbar />} />

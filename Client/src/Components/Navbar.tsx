@@ -91,7 +91,7 @@ const Navbar: React.FC = () => {
 
         {/* For Smaller Screens */}
         <div
-          className={`lg:hidden ${
+          className={`fixed top-0 left-0 lg:hidden ${
             isOpen ? 'translate-x-0' : '-translate-x-full'
           } h-screen bg-white dark:bg-gray-600 transition-transform duration-300`}
         >

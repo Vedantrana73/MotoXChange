@@ -1,16 +1,23 @@
 const crypto = require('crypto');
 const sendEmail = require('../../Components/Mail.js');
 const OTP = require('../../Models/OtpModel.js');
+const Auth = require('../../Models/AuthModel.js');
 
 const registerDetails = async(req,res)=>{
     const {firstName,lastName,email} = req.body;
 
     try{
+        const user = await Auth.findOne({email});
+        if(user)
+        {
+            return res.status(400).json({message: 'User with Specified Email already Exists!'});
+        }
         const otp = crypto.randomInt(1000,9999).toString();
         const otpRecord = new OTP({
             email,
             otp
         });
+
         await otpRecord.save();
     
         const subject = 'Verification Mail';
@@ -31,24 +38,21 @@ const verifyOtp = async(req,res)=>{
 
     try
     {
-        const fetchedOtp = await OTP.find({email});
+        const otpRecord = await OTP.findOne({email}).sort({createdAt: -1});
 
-        if(!fetchedOtp)
+        if(!otpRecord)
         {
             return res.status(404).json({message: 'OTP not Found Try Again'});
         }
+        if(otp==otpRecord.otp)
+        {
+            await OTP.deleteMany({email});
 
-        if(Array.isArray(fetchedOtp) && fetchedOtp.includes(otp))
-        {
-            return res.status(200).json({message: 'Successfully Verified'});
-        }
-        else if(otp === fetchedOtp)
-        {
-            return res.status(200).json({message: 'Successfully Verified'});
+            return res.status(200).json({message: 'OTP Verified Successfully!'})
         }
         else
         {
-            return res.status(200).json({message: 'OTP didn\'t match Try Again'});
+            return res.status(400).json({message: 'OTP didn\'t Match. Please Try Again'})
         }
     }
     catch(error)
