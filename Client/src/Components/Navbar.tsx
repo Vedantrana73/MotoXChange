@@ -28,7 +28,7 @@ const Navbar: React.FC = () => {
         <div className="flex flex-wrap justify-between items-center text-lg dark:bg-gray-600 bg-white border-b border-gray-100">
           <div className="flex items-center">
             <div className='py-1'>
-              <img src={logo} alt="Logo" className="h-16 w-20 md:h-20 md:w-20 lg:h-20 lg:w-28 dark:invert" />
+              <img src={logo} alt="Logo" className="h-16 w-20 md:h-20 md:w-20 lg:h-20n lg:w-28 dark:invert" />
             </div>
             <div className="font-anton text-2xl px-1 md:px-3 lg:px-5 md:text-4xl lg:text-4xl">
               Moto

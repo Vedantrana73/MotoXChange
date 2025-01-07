@@ -4,4 +4,4 @@ const registerDetails = require('../../Controllers/User/Register.js');
 
 router.post('/register',registerDetails)
 
-module.exports = router
+module.exports = router;
