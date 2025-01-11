@@ -5,8 +5,6 @@ import Padding from "./Components/Padding";
 import Login from "./Pages/Login";
 import Register from "./Pages/Register";
 
-// Placeholder components to avoid errors.
-// 
 
 const App: React.FC = () => {
   return (

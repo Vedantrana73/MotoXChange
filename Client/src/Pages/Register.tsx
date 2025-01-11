@@ -2,6 +2,7 @@ import Movingcar from "../Components/Movingcar"
 import RegisterAuthDetails from '../Components/RegisterAuthDetails';
 import { Routes, Route } from 'react-router-dom';
 import RegisterAuthentication from '../Components/RegisterAuthentication';
+import RegisterPassword from "../Components/RegisterPassword";
 
 function Register() {
     return (
@@ -11,6 +12,7 @@ function Register() {
                 <Routes>
                     <Route path = "/" element={<RegisterAuthDetails/>}/>
                     <Route path = "authenticate" element={<RegisterAuthentication/>}/>
+                    <Route path = "password" element={<RegisterPassword/>}/>
                 </Routes>
             </div>
         </>

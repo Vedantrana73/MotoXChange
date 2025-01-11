@@ -6,8 +6,8 @@ import { useNavigate } from 'react-router-dom';
 const RegisterAuthentication: React.FC = () => {
   const {email} = useUser();
   const [otp, setOtp] = useState<string[]>(['', '', '', '']);
-  const [successMessage,setSuccessMessage] = useState<String>('');
-  const [errorMessage,setErrorMessage] = useState<String>('');
+  const [successMessage,setSuccessMessage] = useState<string>('');
+  const [errorMessage,setErrorMessage] = useState<string>('');
 
   const navigate = useNavigate();
   const handleOtpChange = (e: React.ChangeEvent<HTMLInputElement>, index: number) => {
@@ -43,17 +43,21 @@ const RegisterAuthentication: React.FC = () => {
         setSuccessMessage(response.data.message);
         setTimeout(() => {
           setSuccessMessage('');
-          navigate('/login');
+          navigate('/register/password');
         }, 3000);
       }
     }
-    catch(error: any)
-    {
-      setErrorMessage(error.response.data.message);
+    catch (error: unknown) {
+      if (axios.isAxiosError(error) && error.response) {
+        setErrorMessage(error.response.data.message);
+      } else {
+        setErrorMessage('An unexpected error occurred');
+      }
       setTimeout(() => {
-        setErrorMessage('')
+        setErrorMessage('');
       }, 4000);
     }
+    
   }
   return (
     <div className="w-1/2 space-y-8 flex flex-col items-center h-[32rem] shadow-xl shadow-gray-400">

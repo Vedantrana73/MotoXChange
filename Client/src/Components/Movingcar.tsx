@@ -17,11 +17,11 @@ const Movingcar: React.FC = () => {
     }, 2000); // Change image every 2 seconds
 
     return () => clearInterval(interval); // Clean up interval on component unmount
-  },[]);
+  },[imageArr.length]);
 
   return (
     <div
-      className="w-screen lg:w-1/2 bg-cover bg-center flex justify-center p-20 opacity-90"
+      className="w-screen lg:w-1/2 bg-cover bg-center flex justify-center p-20 opacity-90 min-h-96"
       style={{ backgroundImage: `url(${imageArr[currentImage]})` }}
     >
       <div className="text-4xl font-bold">
