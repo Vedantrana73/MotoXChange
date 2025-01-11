@@ -61,6 +61,30 @@ const verifyOtp = async(req,res)=>{
     }
 }
 
+const addPassword = async(req,res)=>{
+    const {email,password,firstName,lastName} = req.body;
 
+    if(!email || !password|| !firstName|| !lastName)
+    {
+        return res.status(400).json({message: "Unexpected Error Occured Please Try Again!"});
+    }
+    try
+    {
+        const auth = new Auth({
+            email,
+            password,
+            firstName,
+            lastName
+        });
+        await auth.save();
 
-module.exports = {registerDetails, verifyOtp}
+        res.status(200).json({message: "Password Set Successfully!"});
+    }
+    catch(error)
+    {
+        console.log("Error Occured While Saving Password: "+error);
+        res.status(500).json({message: "Internal Server Error Occured"});
+    }
+}
+
+module.exports = {registerDetails, verifyOtp, addPassword}
