@@ -42,7 +42,7 @@ const verifyOtp = async(req,res)=>{
 
         if(!otpRecord)
         {
-            return res.status(404).json({message: 'OTP not Found Try Again'});
+            return res.status(404).json({message: 'Looks Like OTP has Expired Please Try Again!'});
         }
         if(otp==otpRecord.otp)
         {
