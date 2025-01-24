@@ -27,8 +27,8 @@ const Navbar: React.FC = () => {
       <nav className="fixed top-0 left-0 w-full z-50 dark:text-gray-100">
         <div className="flex flex-wrap justify-between items-center text-lg dark:bg-gray-600 bg-white border-b border-gray-100">
           <div className="flex items-center">
-            <div className="h-16 w-20 md:h-20 md:w-20 lg:h-24 lg:w-28">
-              <img src={logo} alt="Logo" className="dark:invert" />
+            <div className='py-1'>
+              <img src={logo} alt="Logo" className="h-16 w-20 md:h-20 md:w-20 lg:h-20n lg:w-28 dark:invert" />
             </div>
             <div className="font-anton text-2xl px-1 md:px-3 lg:px-5 md:text-4xl lg:text-4xl">
               Moto
@@ -91,7 +91,7 @@ const Navbar: React.FC = () => {
 
         {/* For Smaller Screens */}
         <div
-          className={`lg:hidden ${
+          className={`fixed top-0 left-0 lg:hidden ${
             isOpen ? 'translate-x-0' : '-translate-x-full'
           } h-screen bg-white dark:bg-gray-600 transition-transform duration-300`}
         >

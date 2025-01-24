@@ -4,18 +4,18 @@ import Navbar from "./Components/Navbar";
 import Padding from "./Components/Padding";
 import Login from "./Pages/Login";
 import Register from "./Pages/Register";
+import Hero from "./Pages/Hero";
+import Featured from "./Components/Featured";
+import WhyUs from "./Components/WhyUs";
 
-// Placeholder components to avoid errors.
-// 
 
 const App: React.FC = () => {
   return (
     <BrowserRouter>
       <Navbar />
-      { <Padding /> }
+      <Padding />
       <Routes>
-        <Route path="/" element={<></>} />
-        <Route path="/register" element={<Register />} />
+        <Route path="/" element={<><Hero /><Featured /><WhyUs/></>} />
         <Route path="/login" element={<Login />} />
         <Route path="/register/*" element={<Register />} /> 
         <Route path="/settings" element={<Navbar />} />
