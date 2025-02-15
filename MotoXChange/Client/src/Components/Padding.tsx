@@ -1,11 +1,11 @@
-import React from 'react';
+import React from 'react'
 
-const Padding: React.FC = () => {
+function Padding() {
   return (
-    <div className="h-24 w-screen">
-      {/* Empty div with padding styles */}
+    <div className='pt-20 md:pt-28'>
+      
     </div>
-  );
-};
+  )
+}
 
-export default Padding;
+export default Padding

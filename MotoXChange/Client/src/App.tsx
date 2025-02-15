@@ -1,25 +1,28 @@
-import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Navbar from "./Components/Navbar";
-import Padding from "./Components/Padding";
-import Login from "./Pages/Login";
-import Register from "./Pages/Register";
-import Hero from "./Pages/Hero";
+import NotFound from "./pages/NotFound.tsx";
+import Navbar from "./components/Navbar.tsx";
+import Padding from "./components/Padding.tsx";
+import BasicRegister from "./pages/BasicRegister.tsx";
+import Home from "./pages/Home.tsx";
+function App() {
+  
 
-
-const App: React.FC = () => {
   return (
     <BrowserRouter>
-      <Navbar />
-      <Padding />
-      <Routes>
-        <Route path="/" element={<><Hero /></>} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register/*" element={<Register />} /> 
-        <Route path="/settings" element={<Navbar />} />
-      </Routes>
+      <Padding/>
+      <Navbar/>
+      <Main/>
     </BrowserRouter>
-  );
-};
+  )
+}
 
-export default App;
+function Main()
+{
+  return(
+    <Routes>
+      <Route path="/" element={<Home/>}/>
+      <Route path = "/register" element={<BasicRegister/>}/>
+    </Routes>
+  )
+}
+export default App

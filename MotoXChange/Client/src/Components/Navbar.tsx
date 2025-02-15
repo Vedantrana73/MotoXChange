@@ -1,145 +1,71 @@
-import React, { useState } from 'react';
-import logo from "../assets/Logo.png";
-import { NavLink } from 'react-router-dom';
-import { GiHamburgerMenu } from 'react-icons/gi';
-import { BiHome, BiMoon, BiSun } from 'react-icons/bi';
-import { CiSettings } from 'react-icons/ci';
+import { Home, LogIn, LogOutIcon, Menu } from 'lucide-react'
+import logo from '../assets/logo.png'
+import { Sheet, SheetContent, SheetTitle, SheetTrigger } from './ui/sheet.tsx'
+import { NavLink, useNavigate } from 'react-router-dom'
+import { Button } from './ui/button.tsx'
+import { Avatar, AvatarImage, AvatarFallback } from './ui/avatar.tsx'
+import { NavigationMenu, NavigationMenuList, NavigationMenuItem, NavigationMenuTrigger, NavigationMenuLink } from './ui/navigation-menu.tsx'
 
-const Navbar: React.FC = () => {
-  const [isOpen, setOpen] = useState<boolean>(false);
-  const [dark, setDark] = useState<boolean>(false);
-
-  const toggleNavbar = (): void => {
-    setOpen((prev) => !prev);
-  };
-
-  const toggleTheme = (): void => {
-    if (dark) {
-      document.documentElement.classList.remove('dark');
-    } else {
-      document.documentElement.classList.add('dark');
-    }
-  };
-
-  return (
-    <>
-      {/* MotoXChange Name and Icon */}
-      <nav className="fixed top-0 left-0 w-full z-50 dark:text-gray-100">
-        <div className="flex flex-wrap justify-between items-center text-lg dark:bg-gray-600 bg-white border-b border-gray-100">
-          <div className="flex items-center">
-            <div className='py-1'>
-              <img src={logo} alt="Logo" className="h-16 w-20 md:h-20 md:w-20 lg:h-20n lg:w-28 dark:invert" />
-            </div>
-            <div className="font-anton text-2xl px-1 md:px-3 lg:px-5 md:text-4xl lg:text-4xl">
-              Moto
-              <span className="text-3xl md:text-5xl lg:text-5xl font-libre text-blue-900 dark:text-yellow-500">
-                X
-              </span>
-              Change
-            </div>
-          </div>
-
-          {/* Hamburger for smaller screens */}
-          <div
-            className={`lg:hidden text-3xl ${isOpen ? 'rotate-90' : 'rotate-0'} transition-transform duration-300`}
-            onClick={toggleNavbar}
-          >
-            <GiHamburgerMenu />
-          </div>
-
-          {/* For Larger Screens */}
-          <div className="hidden lg:block w-1/3 font-bold cursor-pointer">
-            <ul className="flex justify-evenly">
-              <NavLink
-                to="/"
-                className={({ isActive }) => `${isActive ? "text-yellow-500" : ""}`}
-              >
-                Home
-              </NavLink>
-              <NavLink
-                to="/settings"
-                className={({ isActive }) => `${isActive ? "text-yellow-500" : ""}`}
-              >
-                Settings
-              </NavLink>
-              <NavLink
-                to="/login"
-                className={({ isActive }) => `${isActive ? "text-yellow-500" : ""}`}
-              >
-                Login
-              </NavLink>
-              <li>
-                <div
-                  className="h-8 w-16 shadow-sm shadow-gray-400 bg-gray-800 dark:text-gray-50 dark:shadow-white dark:bg-gray-200 rounded-full"
-                  onClick={() => {
-                    setDark(!dark);
-                    toggleTheme();
-                  }}
-                >
-                  <div
-                    className={`flex items-center justify-center text-xl shadow-sm bg-gray-200 dark:bg-gray-700 w-1/2 h-full rounded-full ${
-                      dark ? 'translate-x-full rotate-180' : 'translate-x-0'
-                    } shadow-xl transition-all duration-200`}
-                  >
-                    {dark ? <BiSun /> : <BiMoon />}
-                  </div>
+function Navbar() {
+    const navigate = useNavigate();
+    return (
+        <nav className='fixed top-0 left-0 min-w-screen flex justify-between items-center px-1 bg-white shadow-md z-[1000]'>
+            <div className='flex items-center font-bold text-xl md:text-2xl lg:text-3xl'>
+                <img src={logo} alt="Logo" className='w-20 h-20 md:w-28 md:h-28 cursor-pointer' onClick={() => navigate('/')} />
+                <div>
+                    MotoXChange
                 </div>
-              </li>
-            </ul>
-          </div>
-        </div>
+            </div>
+            <Sheet>
+                <SheetTrigger className="md:hidden">
+                    <Menu className="w-8 h-8" />
+                </SheetTrigger>
+                
+                <SheetContent side="left" className='z-[1000]'>
+                    <div className="flex flex-col space-y-4 py-6">
+                        <Avatar className='border-b border-black pb-4 flex gap-2'>
 
-        {/* For Smaller Screens */}
-        <div
-          className={`fixed top-0 left-0 lg:hidden ${
-            isOpen ? 'translate-x-0' : '-translate-x-full'
-          } h-screen bg-white dark:bg-gray-600 transition-transform duration-300`}
-        >
-          <ul className="px-4 py-5 flex flex-col gap-6">
-            <li>
-              <div
-                className="h-8 w-16 bg-gray-800 dark:text-gray-50 dark:shadow-white dark:bg-gray-200 rounded-full"
-                onClick={() => {
-                  setDark(!dark);
-                  toggleTheme();
-                }}
-              >
-                <div
-                  className={`flex items-center justify-center text-xl shadow-sm bg-gray-200 dark:bg-gray-700 w-1/2 h-full rounded-full ${
-                    dark ? 'translate-x-full' : 'translate-x-0'
-                  } shadow-xl transition-all duration-200`}
-                >
-                  {dark ? <BiSun /> : <BiMoon />}
-                </div>
-              </div>
-            </li>
-            <NavLink
-              to="/"
-              className={({ isActive }) => `${isActive ? 'text-yellow-400' : ''}`}
-            >
-              <li className="flex items-center text-xl gap-2">
-                <span className="text-2xl">
-                  <BiHome />
-                </span>
-                <span>Home</span>
-              </li>
-            </NavLink>
-            <NavLink
-              to="/settings"
-              className={({ isActive }) => `${isActive ? 'text-yellow-400' : ''}`}
-            >
-              <li className="flex items-center text-xl gap-2">
-                <span className="text-2xl">
-                  <CiSettings />
-                </span>
-                <span>Settings</span>
-              </li>
-            </NavLink>
-          </ul>
-        </div>
-      </nav>
-    </>
-  );
-};
+                            <AvatarImage src='https://github.com/shadcn.png' alt='Profile Image' className='rounded-full h-20 w-20' />
+                            <AvatarFallback className='font-semibold bg-blue-600 text-white rounded-full h-20 w-20 text-xl'>AG</AvatarFallback>
 
-export default Navbar;
+
+                        </Avatar>
+                        <Button asChild>
+                            <NavLink to="/" className={({ isActive }) => `text-lg font-semibold ${isActive ? "text-blue-600" : "text-gray-800"} flex items-center gap-2`}>
+                                <Home /> Login
+                            </NavLink>
+                        </Button>
+                        <Button asChild>
+                            <NavLink to="/" className={({ isActive }) => `text-lg font-semibold ${isActive ? "text-blue-600" : "text-gray-800"} flex items-center gap-2`}>
+                                <LogIn /> Login
+                            </NavLink>
+                        </Button>
+                    </div>
+
+                </SheetContent>
+            </Sheet>
+
+            <NavigationMenu className='hidden md:block'>
+                <NavigationMenuList className='space-x-10'>
+                    <NavigationMenuItem className='text-lg font-semibold cursor-pointer'>
+                        Home
+                    </NavigationMenuItem>
+                    <NavigationMenuItem className='text-lg font-semibold cursor-pointer'>
+                        Contact Us
+                    </NavigationMenuItem>
+                    <NavigationMenuItem className='text-lg font-semibold cursor-pointer'>
+                        Login
+                    </NavigationMenuItem>
+                    <NavigationMenuItem>
+                        <Avatar className='h-12 w-12'>
+                            <AvatarImage src='https://github.com/shadcn.png' alt='profile image'/>
+                            <AvatarFallback className='font-semibold bg-blue-500 text-white'>AG</AvatarFallback>
+                        </Avatar>
+                    </NavigationMenuItem>
+                </NavigationMenuList>
+            </NavigationMenu>
+        </nav>
+    )
+}
+
+export default Navbar
