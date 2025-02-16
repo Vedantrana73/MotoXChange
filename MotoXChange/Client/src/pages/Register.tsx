@@ -70,9 +70,10 @@ const Register: React.FC = () => {
                     city: selectedCity,
                 },
                 otp,
+                name: fullName
             });
             setStep(1);
-            navigate("/");
+            navigate("/login");
         } catch (error: any) {
             if (axios.isAxiosError(error) && error.response) {
                 setError(error.response.data.message || "OTP verification failed");

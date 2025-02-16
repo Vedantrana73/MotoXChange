@@ -87,11 +87,22 @@ function Home() {
           <div>Repeat</div>
         </div>
       </div>
+      <div className='px-3 pt-12 py-2 flex items-center gap-3'>
+      <div className="border-l-4 border-blue-500 pl-3">
+          <span className="text-2xl md:text-3xl font-bold">Find By Category</span>
+        </div>
+        <hr className="h-0.5 w-full bg-black dark:bg-white border-0" />
+      </div>
+
+      <div>
+        <div></div>
+      </div>
+
       <div className="px-3 pt-10 flex items-center gap-3">
         <div className="border-l-4 border-blue-500 pl-3">
           <span className="text-2xl md:text-3xl font-bold">Our Features</span>
         </div>
-        <hr className="h-0.5 w-full bg-black border-0" />
+        <hr className="h-0.5 w-full bg-black dark:bg-white border-0" />
       </div>
       <div className="px-5 py-3 gap-7 w-screen flex flex-col items-center flex-wrap md:h-100 overflow-scroll" style={{scrollbarWidth: 'none'}}>
         {services.map((service) => (
@@ -104,7 +115,7 @@ function Home() {
       <div className="border-l-4 border-blue-500 pl-3">
           <span className="text-2xl md:text-3xl font-bold">What Our Customers Say</span>
         </div>
-        <hr className="h-0.5 w-full bg-black border-0" />
+        <hr className="h-0.5 w-full bg-black dark:bg-white border-0" />
         
       </div>
       <div className='font-bold text-2xl px-3 pt-2 pb-3'>
@@ -127,12 +138,12 @@ function Home() {
       <div className="hidden lg:flex relative flex-row items-center justify-center overflow-hidden max-h-80">
         <Marquee pauseOnHover className="[--duration:60s]">
         {reviews.map((review, index) => (
-          <div key={index} className="flex border p-4 rounded-lg shadow-sm bg-white">
+          <div key={index} className="flex border p-4 rounded-lg shadow-sm">
             <img src={review.img} alt={review.name} className="w-12 h-12 rounded-full mr-4" />
             <div>
               <h3 className="text-lg font-semibold">{review.name}</h3>
-              <p className="text-sm text-gray-500">{review.location} • {review.date}</p>
-              <p className="mt-2 text-gray-700">{review.review}</p>
+              <p className="text-sm">{review.location} • {review.date}</p>
+              <p className="mt-2">{review.review}</p>
             </div>
           </div>
         ))}

@@ -20,6 +20,11 @@ const authSchema = mongoose.Schema(
             maxlength: 10,
             trim: true,
         },
+        name: {
+            type: String,
+            required: true,
+            trim: true,
+        },
         address: {
             city: {
                 type: String,

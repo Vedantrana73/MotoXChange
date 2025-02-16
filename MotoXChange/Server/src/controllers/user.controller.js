@@ -3,7 +3,7 @@ import bcrypt from "bcrypt";
 import sendEmail from "../utils/email.js";
 import { User } from "../models/user.model.js";
 import { OTP } from "../models/otp.model.js";
-import { generateOtpEmailTemplate } from "../utils/emailTemplate.js";
+import { generateOtpEmailTemplate, generateWelcomeEmailTemplate } from "../utils/emailTemplate.js";
 
 export const sendOtp = async(req,res) => {
     const {email} = req.body;
@@ -33,7 +33,7 @@ export const sendOtp = async(req,res) => {
 }
 
 export const verifyOtp = async (req, res) => {
-    const { email, password, otp, phone, address, profilePicture, gender } = req.body;
+    const { email, password, otp, phone, address, name } = req.body;
 
     try {
         // Check if OTP exists for the given email
@@ -63,12 +63,11 @@ export const verifyOtp = async (req, res) => {
                 city: address.city,
                 state: address.state,
             },
-            profilePicture: profilePicture || "https://your-default-image-url.com/default.png",
-            gender,
+            name,
             listedCars: [],
             wishlistedCars: [],
         });
-
+        sendEmail(email, "Welcome to MotoXChange", `${name}, Welcome to MotoXChange`, generateWelcomeEmailTemplate(name));
         return res.status(201).json({ message: "User Registered Successfully", userId: newUser._id });
     } catch (error) {
         console.log("Error Occurred While Verifying OTP for " + email + ": ", error);
@@ -93,7 +92,14 @@ export const loginUser = async (req, res) => {
             return res.status(400).json({ message: "Invalid Credentials" });
         }
 
-        return res.status(200).json({ message: "Login Successful", userId: existingUser._id });
+        return res.status(200).json({ message: "Login Successful", user: {
+            email: existingUser.email,
+            phone: existingUser.phone,
+            name: existingUser.name,
+            state: existingUser.address.state,
+            city: existingUser.address.city,
+            userId: existingUser._id
+        } });
     }
     catch (error) {
         console.log("Error Occurred While Logging in User " + email + ": ", error);

@@ -60,7 +60,7 @@ const LoanCalculator = () => {
           </div>
 
           {emi && totalInterest && totalPayment && (
-            <div className="p-4 border rounded bg-gray-100 text-center">
+            <div className="p-4 border rounded text-center">
               <p><strong>Monthly EMI:</strong> ₹{emi}</p>
               <p><strong>Total Interest:</strong> ₹{totalInterest}</p>
               <p><strong>Total Payment:</strong> ₹{totalPayment}</p>

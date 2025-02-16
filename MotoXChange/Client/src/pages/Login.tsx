@@ -7,8 +7,9 @@ import { Label } from "../components/ui/label.tsx";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Marquee } from "../components/ui/marquee.tsx";
+import useUserStore from '../store/userStore.ts';
 
-const carImages = [
+const carImages:string[] = [
   "https://img.freepik.com/free-photo/car-headlight-couple-making-deal-with-car-dealer_651396-1187.jpg",
   "https://media.istockphoto.com/id/1135541222/photo/test-drive-concept.jpg?s=612x612&w=0&k=20&c=CZudjgDGPJ89sx8v2_whh1G5JuYxtLzsEizICrO4oZs=",
   "https://plus.unsplash.com/premium_photo-1661397010754-47598bf606d6?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8Y2FyJTIwZGVhbGVyfGVufDB8fDB8fHww",
@@ -17,6 +18,7 @@ const carImages = [
 ];
 
 const Login: React.FC = () => {
+    const {setUser} = useUserStore();
     const navigate = useNavigate();
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
@@ -33,7 +35,8 @@ const Login: React.FC = () => {
                 email,
                 password,
             });
-            localStorage.setItem("userId", response.data.userId);
+            setUser(response.data.user);
+            localStorage.setItem("userId", response.data.user.userId);
             navigate("/");
         } catch (error) {
             if (axios.isAxiosError(error) && error.response) {
