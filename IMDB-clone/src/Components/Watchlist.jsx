@@ -1,11 +1,11 @@
 import React from 'react'
 
-function Watchlist() {
+function WatchList() {
   return (
     <div>
-        <h1>Watchlist</h1>
+        <h1>This is WatchLists</h1>
     </div>
   )
 }
 
-export default Watchlist
+export default WatchList
