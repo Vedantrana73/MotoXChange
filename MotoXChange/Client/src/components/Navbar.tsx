@@ -86,7 +86,11 @@ function Navbar() {
                                 Login
                             </Link>
                         </DropdownMenuItem>}
-                        <DropdownMenuItem className='cursor-pointer'>Profile</DropdownMenuItem>
+                        <DropdownMenuItem className='cursor-pointer'>
+                            <Link to="/profile">
+                                Profile
+                            </Link>
+                        </DropdownMenuItem>
                     </DropdownMenuGroup>
                     <DropdownMenuSeparator />
                     <DropdownMenuGroup>
@@ -95,6 +99,11 @@ function Navbar() {
                         }}>Saved Cars</DropdownMenuItem>
                         <DropdownMenuItem className='cursor-pointer md:hidden'>Buy Used Cars</DropdownMenuItem>
                         <DropdownMenuItem className='cursor-pointer md:hidden'>Sell Used Car</DropdownMenuItem>
+                        <DropdownMenuItem className='cursor-pointerc md:hidden'>
+                            <Link to='/emi-calculator'>
+                                EMI Calculator
+                            </Link>
+                        </DropdownMenuItem>
                     </DropdownMenuGroup>
                     <DropdownMenuSeparator />
                     {user.userId && <DropdownMenuGroup>

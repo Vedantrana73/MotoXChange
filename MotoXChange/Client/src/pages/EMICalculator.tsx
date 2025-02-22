@@ -36,7 +36,7 @@ const LoanCalculator = () => {
   }, [loanAmount, interestRate, loanTenure]);
 
   return (
-    <div className="flex justify-center px-2">
+    <div className="flex justify-center">
       <Card className="w-full max-w-3xl md:shadow-lg rounded-lg py-3">
         <CardContent className="grid gap-6">
           <div className="flex flex-col items-center text-center">
@@ -60,7 +60,7 @@ const LoanCalculator = () => {
           </div>
 
           {emi && totalInterest && totalPayment && (
-            <div className="p-4 border rounded text-center">
+            <div className="p-4 border rounded-lg text-center">
               <p><strong>Monthly EMI:</strong> ₹{emi}</p>
               <p><strong>Total Interest:</strong> ₹{totalInterest}</p>
               <p><strong>Total Payment:</strong> ₹{totalPayment}</p>
