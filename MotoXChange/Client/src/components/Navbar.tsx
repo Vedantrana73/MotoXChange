@@ -1,19 +1,17 @@
-import { CoinsIcon, Home, LogIn, LogOutIcon, Menu } from 'lucide-react'
 import logo from '../assets/logo.png'
-import { Sheet, SheetContent, SheetTitle, SheetTrigger } from './ui/sheet.tsx'
 import { Link, NavLink, useNavigate } from 'react-router-dom'
-import { Button } from './ui/button.tsx'
 import { Avatar, AvatarImage, AvatarFallback } from './ui/avatar.tsx'
 import { NavigationMenu, NavigationMenuList, NavigationMenuItem, NavigationMenuTrigger, NavigationMenuLink } from './ui/navigation-menu.tsx'
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuGroup, DropdownMenuItem } from './ui/dropdown-menu.tsx'
 import useUserStore from '../store/userStore.ts'
 import { useTheme } from './theme-provider.tsx'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Switch } from './ui/switch.tsx'
 import { Label } from './ui/label.tsx'
+import axios from 'axios'
 
 function Navbar() {
-    const { user, setUserField } = useUserStore();
+    const {user, setUser, setUserField } = useUserStore();
     const { setTheme } = useTheme();
     const [themeControl, setThemeControl] = useState<string>(localStorage.getItem("vite-ui-theme"));
     const navigate = useNavigate();
@@ -35,6 +33,25 @@ function Navbar() {
             setThemeControl('dark');
         }
     }
+
+    useEffect(()=>{
+        const fetchUser = async() =>{
+            try
+            {
+                const response = await axios.post(`http://localhost:5000/api/auth/fetch/${user.userId}`);
+                setUserField("email",response.data.email)
+                setUserField("phone",response.data.phone)
+                setUserField("name",response.data.name)
+                setUserField("city",response.data.address.city)
+                setUserField("state",response.data.address.state)
+            }
+            catch(error)
+            {
+                console.log("Error Occured")
+            }
+        }
+        fetchUser()
+    },[user.userId])
     return (
         <nav className='fixed top-0 left-0 min-w-screen flex justify-between items-center px-1 shadow-md z-[1000] bg-white dark:bg-slate-950'>
             <div className='flex items-center font-bold text-xl md:text-2xl lg:text-3xl'>
@@ -60,7 +77,9 @@ function Navbar() {
                         </NavLink>
                     </NavigationMenuItem>
                     <NavigationMenuItem className='text-lg font-semibold cursor-pointer'>
-                        Contact Us
+                    <NavLink to="/contact-us" className={({ isActive }) => `text-lg font-semibold ${isActive ? "text-yellow-500" : ""} flex items-center gap-2`}>
+                            Contact Us
+                        </NavLink>
                     </NavigationMenuItem>
                 </NavigationMenuList>
             </NavigationMenu>

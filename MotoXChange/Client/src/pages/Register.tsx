@@ -11,6 +11,7 @@ import { cities } from '../lib/cities.ts';
 import { Marquee } from "../components/ui/marquee.tsx";
 import { Select, SelectTrigger, SelectContent, SelectValue, SelectItem } from "../components/ui/select.tsx";
 import { toast } from "sonner";
+import { Loader2 } from "lucide-react";
 
 const carImages = [
     "https://img.freepik.com/free-photo/car-headlight-couple-making-deal-with-car-dealer_651396-1187.jpg",
@@ -31,11 +32,14 @@ const Register: React.FC = () => {
     const [otp, setOtp] = useState<string>("");
     const [selectedState, setSelectedState] = useState<string>("");
     const [selectedCity, setSelectedCity] = useState<string>("");
-
+    const [loading, setLoading] = useState<boolean>(false);
+    const [otpLoading, setOtpLoading] = useState<boolean>(false);
 
     // Handle Registration
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        setLoading(true);
+
         if (password !== confirmPassword) {
             setError("Passwords do not match");
             setTimeout(() => {
@@ -72,6 +76,8 @@ const Register: React.FC = () => {
     // Handle OTP Verification
     const handleVerify = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault(); // Prevent page refresh
+        setOtpLoading(true);
+
         try {
             const response = await axios.post("http://localhost:5000/api/auth/verify-otp", {
                 email,
@@ -83,6 +89,10 @@ const Register: React.FC = () => {
                 },
                 otp,
                 name: fullName
+            });
+            toast.success("Account Created!", {
+                description: "You can now login.",
+                duration: 4000, // Toast will be visible for 4 seconds
             });
             setStep(1);
             navigate("/login");
@@ -172,7 +182,10 @@ const Register: React.FC = () => {
                                     <Input id="confirmPassword" type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} required />
                                 </div>
                                 {error && <p className="text-red-500 text-md font-semibold">{error}</p>}
-                                <Button type="submit" className="w-full">Next</Button>
+                                <Button type="submit" className="w-full" disabled={loading}>
+                                    {loading ? <Loader2 className="mr-2 h-5 w-5 animate-spin" /> : "Next"}
+                                </Button>
+
                                 <div className="text-center text-sm">
                                     Already have an account? <Link to="/login">Login</Link>
                                 </div>
@@ -204,7 +217,10 @@ const Register: React.FC = () => {
 
                             {error && <p className="text-red-500 text-lg font-semibold">{error}</p>}
 
-                            <Button type="submit" className="w-full max-w-50 text-lg p-4">Verify OTP</Button>
+                            <Button type="submit" className="w-full max-w-50 text-lg p-4" disabled={otpLoading}>
+                                {otpLoading ? <Loader2 className="mr-2 h-5 w-5 animate-spin" /> : "Verify OTP"}
+                            </Button>
+
                         </form>
 
                     )}
