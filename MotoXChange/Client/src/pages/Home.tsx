@@ -87,16 +87,7 @@ function Home() {
           <div>Repeat</div>
         </div>
       </div>
-      <div className='px-3 pt-12 py-2 flex items-center gap-3'>
-      <div className="border-l-4 border-blue-500 pl-3">
-          <span className="text-2xl md:text-3xl font-bold">Find By Category</span>
-        </div>
-        <hr className="h-0.5 w-full bg-black dark:bg-white border-0" />
-      </div>
-
-      <div>
-        <div></div>
-      </div>
+     
 
       <div className="px-3 pt-10 flex items-center gap-3">
         <div className="border-l-4 border-blue-500 pl-3">
