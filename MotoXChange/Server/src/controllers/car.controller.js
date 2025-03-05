@@ -59,26 +59,24 @@ export const findByLocation = async(req,res) => {
     }
 }
 
-export const viewCarById = async(req,res) => {
-    const {id} = req.params;
-    if(!id)
-    {
-        return res.status(400).json({message: "Please Provide Correct Car Id"});
+export const viewCarById = async (req, res) => {
+    const { id } = req.params;
+    if (!id) {
+        return res.status(400).json({ message: "Please Provide Correct Car Id" });
     }
 
-    try
-    {
-        const fetchedCar = await Car.findById(id);
-        if(!fetchedCar)
-        {
-            return res.status(204).json({message: "No Car Found For the Specified Id"});
+    try {
+        const fetchedCar = await Car.findById(id)
+            .populate({ path: "owner", select: "name email phone" }) // Populate only name, email, and phone of owner
+            
+
+        if (!fetchedCar) {
+            return res.status(204).json({ message: "No Car Found For the Specified Id" });
         }
-        
+
         res.status(200).json(fetchedCar);
+    } catch (error) {
+        console.error(`Error Occurred While Finding Car By Id: ${id}`, error);
+        res.status(500).json({ message: "Internal Server Error Occurred" });
     }
-    catch(error)
-    {
-        console.log("Error Occured While Finding Car By Id with Id: "+id+" "+error);
-        res.status(500).json({message: "Internal Server Error Occured"});
-    }
-}
+};

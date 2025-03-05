@@ -64,12 +64,14 @@ function Navbar() {
             <NavigationMenu className='hidden md:block'>
                 <NavigationMenuList className='space-x-5'>
                     <NavigationMenuItem className='text-lg font-semibold cursor-pointer' onClick={() => navigate('/buy-car')}>
-                        Buy Car
+                    <NavLink to="/buy-car" className={({ isActive }) => `text-lg font-semibold ${isActive ? "text-yellow-500" : ""} flex items-center gap-2`}>
+                            Buy Car
+                        </NavLink>
                     </NavigationMenuItem>
-                    <NavigationMenuItem className='text-lg font-semibold cursor-pointer' onClick={() => {
-                        user.userId ? navigate('/sell-car') : navigate('/login')
-                    }}>
-                        Sell Car
+                    <NavigationMenuItem className='text-lg font-semibold cursor-pointer'>
+                    <NavLink to="/sell-car" className={({ isActive }) => `text-lg font-semibold ${isActive ? "text-yellow-500" : ""} flex items-center gap-2`}>
+                            Sell Car
+                        </NavLink>
                     </NavigationMenuItem>
                     <NavigationMenuItem className='text-lg font-semibold cursor-pointer'>
                         <NavLink to="/emi-calculator" className={({ isActive }) => `text-lg font-semibold ${isActive ? "text-yellow-500" : ""} flex items-center gap-2`}>
