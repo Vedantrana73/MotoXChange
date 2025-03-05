@@ -10,6 +10,7 @@ import Login from "./pages/Login.tsx";
 import Profile from "./pages/Profile.tsx";
 import SellCar from "./pages/SellCar.tsx";
 import ListingPage from "./pages/ListingPage.tsx";
+import CarDetail from "./pages/CarDetail.tsx";
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function Main() {
       <Route path="/profile" element={<Profile />} />
       <Route path="/sell-car" element={<SellCar/>}/>
       <Route path="/buy-car" element={<ListingPage/>}/>
+      <Route path="/car/:id" element={<CarDetail/>}/>
       <Route path="/*" element={<NotFound />} />
     </Routes>
   );

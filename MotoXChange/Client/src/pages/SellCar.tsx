@@ -6,8 +6,10 @@ import axios from "axios";
 import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
 import { Button } from "../components/ui/button.tsx";
+import useUserStore from "../store/userStore.ts";
 
 const CenteredCard: React.FC = () => {
+  const user = useUserStore((state) => state.user);
   const [selectedBrand, setSelectedBrand] = useState<string>("");
   const [selectedModel, setSelectedModel] = useState<string>("");
   const [selectedFuelType, setSelectedFuelType] = useState<string>("");
@@ -143,7 +145,7 @@ const CenteredCard: React.FC = () => {
             seats,
             features,
             year,
-            owner: "65a9f8c3d4e6a1b2c3d4e5f6",
+            owner: user?.userId,
             price,
             description,
             location: {

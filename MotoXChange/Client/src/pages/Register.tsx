@@ -62,6 +62,7 @@ const Register: React.FC = () => {
             });
             setStep(2);
         } catch (error) {
+            setLoading(false)
             if (axios.isAxiosError(error) && error.response) {
                 setError(error.response.data.message || "Registration Failed");
             } else {
