@@ -107,4 +107,25 @@ export const loginUser = async (req, res) => {
     }
 }
 
+export const fetchUser = async(req,res) => {
+    const {id} = req.params;
+    if(!id)
+    {
+        return res.status(400).json({message: "User ID Not Found"});
+    }
+    try
+    {
+        const fetchedUser = await User.findById(id);
+        if(!fetchedUser)
+        {
+            return res.status(404).json({message: "User Not Found"});
+        }
+        res.status(200).json({email: fetchedUser.email, name: fetchedUser.name, phone: fetchedUser.phone, address: fetchedUser.address});
+    }
+    catch(error)
+    {
+        console.log("Error Occured While Fetching User Details With ID: "+id);
+        return res.status(500).json({message: "Internal Server Error Occured"});
+    }
+}
 

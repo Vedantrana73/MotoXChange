@@ -49,7 +49,7 @@ const Login: React.FC = () => {
     };
 
     return (
-        <div className={cn("flex flex-col gap-6 max-w-5xl m-auto rounded-xl p-6")}> 
+        <div className={cn("flex flex-col gap-6 max-w-5xl m-auto rounded-xl md:p-6")}> 
             <Card className="overflow-hidden md:min-h-120 md:shadow-lg">
                 <CardContent className="grid p-0 md:grid-cols-2">
                     <form className="p-6 md:p-8 w-full" onSubmit={handleSubmit}>
@@ -60,11 +60,11 @@ const Login: React.FC = () => {
                             </div>
                             <div className="grid gap-2">
                                 <Label htmlFor="email">Email</Label>
-                                <Input id="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+                                <Input id="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)}/>
                             </div>
                             <div className="grid gap-2">
                                 <Label htmlFor="password">Password</Label>
-                                <Input id="password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
+                                <Input id="password" type="password" value={password} onChange={(e) => setPassword(e.target.value)}/>
                             </div>
                             {error && <p className="text-red-500 text-md font-semibold">{error}</p>}
                             <Button type="submit" className="w-full">Login</Button>
@@ -79,7 +79,7 @@ const Login: React.FC = () => {
                                 className="flex flex-row items-center gap-4"
                                 style={{
                                     transform:
-                                        "translateX(-100px) translateY(0px) translateZ(-100px) rotateX(20deg) rotateY(-10deg) rotateZ(20deg)",
+                                        "translateX(-100px) translateY(0px) rotateX(20deg) rotateY(-10deg) rotateZ(20deg)",
                                 }}
                             >
                                 <Marquee pauseOnHover vertical className="[--duration:40s]">
