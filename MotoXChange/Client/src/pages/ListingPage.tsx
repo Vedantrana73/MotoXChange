@@ -8,11 +8,12 @@ import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from ".
 import { cities } from "../lib/cities.ts";
 import { brands } from "../lib/brands.ts";
 import { Checkbox } from "../components/ui/checkbox.tsx";
+import useCarStore from "../store/carStore.ts";
 
 function ListingPage() {
+  const { cars, setCars } = useCarStore();
   const user = useUserStore((state) => state.user);
   const { setUserField } = useUserStore();
-  const [cars, setCars] = useState([]);
   const [error, setError] = useState("");
   const navigate = useNavigate();
   

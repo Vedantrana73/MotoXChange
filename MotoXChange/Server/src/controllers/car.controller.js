@@ -1,14 +1,34 @@
 import {Car} from '../models/car.model.js';
+import { User } from '../models/user.model.js';
 
-export const addCar = async(req,res) => {
-    const { description, brand, model, year, price, fuelType, transmission, mileage, location, images, owner, seats, features} = req.body;
-    if( !description || !brand || !model || !year || !price || !fuelType || !transmission || !mileage || !location || !images || !owner || !seats || !features)
-    {
-        return res.status(400).json({message: "All Fields Are Required!"});
+export const getCarsByOwner = async (req, res) => {
+    try {
+        const { ownerId } = req.params;
+
+        // Find all cars where owner matches ownerId
+        const cars = await Car.find({ owner: ownerId });
+
+        if (!cars.length) {
+            return res.status(404).json({ message: "No cars found for this owner!" });
+        }
+
+        return res.status(200).json({ cars });
+    } catch (error) {
+        console.error("Error fetching cars by owner: ", error);
+        return res.status(500).json({ message: "Internal Server Error" });
+    }
+};
+
+export const addCar = async (req, res) => {
+    const { description, brand, model, year, price, fuelType, transmission, mileage, location, images, owner, seats, features } = req.body;
+
+    // Validate required fields
+    if (!description || !brand || !model || !year || !price || !fuelType || !transmission || !mileage || !location || !images || !owner || !seats || !features) {
+        return res.status(400).json({ message: "All Fields Are Required!" });
     }
 
-    try
-    {
+    try {
+        // Create a new car instance
         const newCar = new Car({
             description,
             brand,
@@ -24,16 +44,26 @@ export const addCar = async(req,res) => {
             seats,
             features
         });
-        
-        await newCar.save();
-        return res.status(200).json({message: "Car Listed Successfully!"});
+
+        // Save the new car in the database
+        const savedCar = await newCar.save();
+
+        // Find the user and update their listedCars array
+        const updatedUser = await User.findByIdAndUpdate(owner, 
+            { $push: { listedCars: savedCar._id } }, 
+            { new: true } // Return the updated user document
+        );
+
+        if (!updatedUser) {
+            return res.status(404).json({ message: "Owner not found!" });
+        }
+
+        return res.status(200).json({ message: "Car Listed Successfully!", car: savedCar });
+    } catch (error) {
+        console.error("Error Occurred While Adding Car: ", error);
+        return res.status(500).json({ message: "Internal Server Error Occurred" });
     }
-    catch(error)
-    {
-        console.log("Error Occured While Adding Car "+error);
-        return res.status(500).json({message: "Internal Server Error Occured"});
-    }
-}
+};
 
 export const findByLocation = async(req,res) => {
     const {state,city} = req.params;
@@ -78,5 +108,36 @@ export const viewCarById = async (req, res) => {
     } catch (error) {
         console.error(`Error Occurred While Finding Car By Id: ${id}`, error);
         res.status(500).json({ message: "Internal Server Error Occurred" });
+    }
+};
+
+export const deleteCar = async (req, res) => {
+    const { carId } = req.params;
+
+    if (!carId) {
+        return res.status(400).json({ message: "Please provide a valid Car ID" });
+    }
+
+    try {
+        // Find the car before deleting to get the owner ID
+        const carToDelete = await Car.findById(carId);
+
+        if (!carToDelete) {
+            return res.status(404).json({ message: "Car not found!" });
+        }
+
+        // Delete the car
+        await Car.findByIdAndDelete(carId);
+
+        // Remove the car ID from the owner's listedCars array
+        await User.findByIdAndUpdate(carToDelete.owner, 
+            { $pull: { listedCars: carId } }, 
+            { new: true }
+        );
+
+        return res.status(200).json({ message: "Car deleted successfully!" });
+    } catch (error) {
+        console.error("Error deleting car:", error);
+        return res.status(500).json({ message: "Internal Server Error" });
     }
 };

@@ -11,7 +11,7 @@ import Profile from "./pages/Profile.tsx";
 import SellCar from "./pages/SellCar.tsx";
 import ListingPage from "./pages/ListingPage.tsx";
 import CarDetail from "./pages/CarDetail.tsx";
-
+import SavedCars from './pages/SavedCars.tsx'
 function App() {
   return (
     <BrowserRouter>
@@ -34,6 +34,7 @@ function Main() {
       <Route path="/sell-car" element={<SellCar/>}/>
       <Route path="/buy-car" element={<ListingPage/>}/>
       <Route path="/car/:id" element={<CarDetail/>}/>
+      <Route path="/saved-cars" element = {<SavedCars/>}/>
       <Route path="/*" element={<NotFound />} />
     </Routes>
   );
