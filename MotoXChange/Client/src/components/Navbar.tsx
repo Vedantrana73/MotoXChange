@@ -83,6 +83,11 @@ function Navbar() {
                             Contact Us
                         </NavLink>
                     </NavigationMenuItem>
+                    <NavigationMenuItem className='text-lg font-semibold cursor-pointer'>
+                    <NavLink to="/about-us" className={({ isActive }) => `text-lg font-semibold ${isActive ? "text-yellow-500" : ""} flex items-center gap-2`}>
+                            About Us
+                        </NavLink>
+                    </NavigationMenuItem>
                 </NavigationMenuList>
             </NavigationMenu>
             <DropdownMenu>

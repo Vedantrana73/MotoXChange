@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { Toaster } from "./components/ui/sonner.tsx"; // Import Toaster
 import NotFound from "./pages/NotFound.tsx";
 import Navbar from "./components/Navbar.tsx";
@@ -11,15 +11,33 @@ import Profile from "./pages/Profile.tsx";
 import SellCar from "./pages/SellCar.tsx";
 import ListingPage from "./pages/ListingPage.tsx";
 import CarDetail from "./pages/CarDetail.tsx";
-import SavedCars from './pages/SavedCars.tsx'
+import AboutUs from "./pages/About.tsx";
+import Contact from "./pages/Contact.tsx";
+import OwnerDashboard from "./pages/OwnerDashboard.tsx";
+
 function App() {
   return (
     <BrowserRouter>
       <Toaster richColors position="bottom-right" /> {/* Add Toaster here */}
-      <Padding />
-      <Navbar />
-      <Main />
+      <ConditionalLayout />
     </BrowserRouter>
+  );
+}
+
+function ConditionalLayout() {
+  const location = useLocation();
+  const hideNavbarRoutes = ["/owner-dashboard"]; // Add routes where navbar should be hidden
+
+  return (
+    <>
+      {!hideNavbarRoutes.includes(location.pathname) && (
+        <>
+          <Padding />
+          <Navbar />
+        </>
+      )}
+      <Main />
+    </>
   );
 }
 
@@ -31,10 +49,19 @@ function Main() {
       <Route path="/login" element={<Login />} />
       <Route path="/emi-calculator" element={<EMICalculator />} />
       <Route path="/profile" element={<Profile />} />
+<<<<<<< HEAD
       <Route path="/sell-car" element={<SellCar/>}/>
       <Route path="/buy-car" element={<ListingPage/>}/>
       <Route path="/car/:id" element={<CarDetail/>}/>
       <Route path="/saved-cars" element = {<SavedCars/>}/>
+=======
+      <Route path="/sell-car" element={<SellCar />} />
+      <Route path="/buy-car" element={<ListingPage />} />
+      <Route path="/car/:id" element={<CarDetail />} />
+      <Route path="/contact-us" element={<Contact />} />
+      <Route path="/about-us" element={<AboutUs />} />
+      <Route path="/owner-dashboard" element={<OwnerDashboard />} />
+>>>>>>> 8808a8591e3fd223f0d1a81da79f1e62dbca3f1c
       <Route path="/*" element={<NotFound />} />
     </Routes>
   );
